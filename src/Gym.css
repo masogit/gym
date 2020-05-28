@@ -1,0 +1,32 @@
+body {
+  /* background-color: #282c34; */
+}
+
+.user {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.user input {
+  width: 25%;
+  text-align: center;
+}
+
+.reserved {
+  text-align: center;
+}
+
+.reserved-item {
+  display: flex;
+  justify-content: space-around;
+}
+
+h4 {
+  line-height: 40px;
+}
+
+.message {
+  text-align: center;
+  color: brown;
+}
