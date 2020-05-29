@@ -194,6 +194,8 @@ const ReserveForm = props => {
 
   const getAvailable = async () => {
     setLoading(true)
+    available[date] = []
+    setAvailable(available)
 
     const cancel = async (sso) => {
       let res = await fetch(`http://gymbooking.gechina.com.cn/api/v1/getLastGymRegFormsBySSO?sso=${sso}`)
@@ -290,12 +292,11 @@ const ReserveForm = props => {
           </Radio.Group>
         </div>
         <div>
-          <div style={{ height: '26px', lineHeight: '26px' }}>时段:
+          <div style={{ height: '26px', lineHeight: '26px' }}>时段: 
             {loading
               ? ' 查询中...'
-              : !reserved.find(item => item.reg_date === date)
-                ? <button onClick={getAvailable}>刷新可用</button>
-                : ''}
+              : <button onClick={getAvailable}>刷新可用</button>
+            }
           </div>
           <Radio.Group onChange={onChangeSchedule} value={schedule}>
             {slots.map((slot, i) => {
