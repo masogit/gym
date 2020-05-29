@@ -57,7 +57,7 @@ const UserInfo = props => {
     <div className="user">
       <input placeholder="name" value={name} onChange={eventSetName}></input>
       <input placeholder="sso" value={sso} onChange={eventSetSso}></input>
-      <input placeholder="mobile" value={mobile} onChange={eventSetMobile}></input>
+      <input placeholder="mobile" style={{ minWidth: '115px' }} value={mobile} onChange={eventSetMobile}></input>
       <button onClick={save}>保存</button>
     </div>
   )
@@ -292,7 +292,7 @@ const ReserveForm = props => {
           </Radio.Group>
         </div>
         <div>
-          <div style={{ height: '26px', lineHeight: '26px' }}>时段: 
+          <div style={{ height: '26px', lineHeight: '26px' }}>时段:
             {loading
               ? ' 查询中...'
               : <button onClick={getAvailable}>刷新可用</button>
