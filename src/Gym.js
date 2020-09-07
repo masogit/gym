@@ -1,6 +1,6 @@
 import * as React from 'react';
 import moment from 'moment'
-import { Form, Input, Button, Radio } from 'antd';
+import { Radio } from 'antd';
 import './Gym.css'
 
 const slots = [
@@ -133,7 +133,7 @@ const ReserveForm = props => {
   const [available, setAvailable] = React.useState({})
   const [message, setMessage] = React.useState('')
   const [schedule, setSchedule] = React.useState(1)
-  const next_days = 10
+  const next_days = 5
 
   React.useEffect(() => {
     setToday()
@@ -323,22 +323,18 @@ const Day = props => {
   const detail = reserved?.reg_schedule_detail ? `(${reserved?.reg_schedule_detail})` : ''
 
   React.useEffect(() => {
-    const valid = localStorage.getItem(`gym_${value}`)
-    if (valid === null) {
-      fetch(`http://gymbooking.gechina.com.cn/api/v1/checkDate?date=${value}`)
-        .then(res => res.json())
-        .then(({ result }) => {
-          if (result === 'ok') {
-            setDisplay("true")
-          }
-          localStorage.setItem(`gym_${value}`, JSON.stringify(result === 'ok' ? true : false))
-        })
-    } else {
-      setDisplay(valid)
-    }
+    fetch(`http://gymbooking.gechina.com.cn/api/v1/checkDate?date=${value}`)
+      .then(res => res.json())
+      .then(({ result }) => {
+        if (result === 'ok') {
+          setDisplay("true")
+        } else {
+          setDisplay("false")
+        }
+      })
   }, [value])
 
-  return display === 'true' && <Radio style={style} value={value}>{value.substring(5, value.length)} {detail}</Radio>
+  return <Radio style={style} disabled={display === "false"} value={value}>{value.substring(5, value.length)} {detail}</Radio>
 }
 
 function randMobile() {
