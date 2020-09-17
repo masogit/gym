@@ -313,7 +313,7 @@ const ReserveForm = props => {
           </Radio.Group></div>
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-        {posting ? '执行中...' : <button onClick={quickReg} style={{ display: 'block' }}>快速预约</button>}
+        {/* {posting ? '执行中...' : <button onClick={quickReg} style={{ display: 'block' }}>快速预约</button>} */}
         <button onClick={submit} style={{ display: 'block' }}>预约</button>
       </div>
       <div className="message">{message}</div>
