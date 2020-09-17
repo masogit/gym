@@ -12,14 +12,18 @@ const Gym = props => {
   const [user, setUser] = React.useState(null)
   const [update, setUpdate] = React.useState(0)
   const [reserved, setReserved] = React.useState([])
-
+  const onClick = () => {
+    document.querySelector("input[placeholder='sso'").select()
+    document.execCommand(`copy`, false)
+    window.location.href = 'http://gymbooking.gechina.com.cn/gym.html'
+  }
   return (
     <div>
       <h2 style={{ textAlign: 'center' }}>Gym Revervation</h2>
       <UserInfo onChange={setUser} />
       <ReservedList user={user} onChange={setReserved} update={update} />
       <ReserveForm user={user} reserved={reserved} onChange={() => setUpdate(update + 1)} />
-      <div style={{ textAlign: 'center' }}><a href="http://gymbooking.gechina.com.cn/gym.html">Go Gym Site</a></div>
+      <div style={{ textAlign: 'center', color: 'darkblue' }} onClick={onClick}>Copy SSO → Gym Site</div>
     </div>
   )
 }
