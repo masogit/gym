@@ -23,7 +23,8 @@ const Gym = props => {
       <UserInfo onChange={setUser} />
       <ReservedList user={user} onChange={setReserved} update={update} />
       <ReserveForm user={user} reserved={reserved} onChange={() => setUpdate(update + 1)} />
-      <div style={{ textAlign: 'center', color: 'darkblue' }} onClick={onClick}>Copy SSO → Gym Site</div>
+      <div style={{ textAlign: 'center', color: 'darkblue', marginTop: '20px' }} onClick={onClick}>Copy SSO → Gym Site</div>
+      <div style={{ textAlign: 'center', marginTop: '20px' }}><a href="http://gymbooking.gechina.com.cn/gym.html">Go Gym Site</a></div>
     </div>
   )
 }
