@@ -1,6 +1,7 @@
 import * as React from 'react';
 import moment from 'moment'
 import { Radio } from 'antd';
+import queryString from 'query-string'
 import './Gym.css'
 
 const slots = [
@@ -39,7 +40,9 @@ const UserInfo = props => {
   const eventSetMobile = e => setMobile(e.target.value)
 
   const load = () => {
-    const userinfo = localStorage.getItem('userinfo') ? JSON.parse(localStorage.getItem('userinfo')) : {}
+    const userinfo = localStorage.getItem('userinfo') 
+      ? JSON.parse(localStorage.getItem('userinfo')) 
+      : queryString.parse(window.location.search)
     userinfo.name && setName(userinfo.name)
     userinfo.sso && setSso(userinfo.sso)
     userinfo.mobile && setMobile(userinfo.mobile)
@@ -49,22 +52,27 @@ const UserInfo = props => {
   const save = () => {
     if (sso && name && mobile) {
       localStorage.setItem('userinfo', JSON.stringify({ name, sso, mobile }))
+      const url = queryString.stringify({ sso, name, mobile})
+      window.history.pushState(null, '', `${window.location.pathname}?${url}`)
     }
     props.onChange({ name, sso, mobile })
   }
 
   React.useEffect(() => {
+    console.log(props)
     load()
-    return save
   }, [])
 
   return (
-    <div className="user">
-      <input placeholder="name" value={name} onChange={eventSetName}></input>
-      <input placeholder="sso" value={sso} onChange={eventSetSso}></input>
-      <input placeholder="mobile" style={{ minWidth: '115px' }} value={mobile} onChange={eventSetMobile}></input>
-      <button onClick={save}>保存</button>
-    </div>
+    <React.Fragment>
+      <div className="user">
+        <input placeholder="name" value={name} onChange={eventSetName}></input>
+        <input placeholder="sso" value={sso} onChange={eventSetSso}></input>
+        <input placeholder="mobile" style={{ minWidth: '115px' }} value={mobile} onChange={eventSetMobile}></input>
+        <button onClick={save}>保存</button>
+      </div>
+      <div className="hint">建议保存用户信息后再收藏地址</div>
+    </React.Fragment>
   )
 }
 

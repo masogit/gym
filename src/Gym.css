@@ -8,6 +8,11 @@ body {
   justify-content: space-between;
 }
 
+.hint {
+  text-align: center;
+  font-size: 12px;
+}
+
 .user input {
   width: 25%;
   text-align: center;

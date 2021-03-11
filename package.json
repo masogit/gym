@@ -9,6 +9,8 @@
     "@testing-library/user-event": "^7.1.2",
     "antd": "^4.2.5",
     "moment": "^2.26.0",
+    "node-sass": "^4.14.1",
+    "query-string": "^6.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router": "^5.2.0",
@@ -17,7 +19,9 @@
   },
   "scripts": {
     "sit": "yarn build && yarn push:sit",
+    "uat": "yarn build && yarn push:uat",
     "push:sit": "scp -r build/* guru@120.132.8.142:/var/www/html/gym",
+    "push:uat": "scp -r build/* root@120.132.8.152:/var/www/html/gym",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
