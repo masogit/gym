@@ -9,6 +9,8 @@ const slots = [
   '12:50 - 14:10', '14:25 - 15:45', '16:00 - 17:20', '17:35 - 19:00'
 ]
 
+const server = 'http://gymbooking.ge.com.cn'
+
 const Gym = props => {
   const [user, setUser] = React.useState(null)
   const [update, setUpdate] = React.useState(0)
@@ -16,7 +18,7 @@ const Gym = props => {
   const onClick = () => {
     document.querySelector("input[placeholder='sso'").select()
     document.execCommand(`copy`, false)
-    window.location.href = 'http://gymbooking.gechina.com.cn/gym.html'
+    window.location.href = `${server}/gym.html`
   }
   return (
     <div>
@@ -25,7 +27,7 @@ const Gym = props => {
       <ReservedList user={user} onChange={setReserved} update={update} />
       <ReserveForm user={user} reserved={reserved} onChange={() => setUpdate(update + 1)} />
       <div style={{ textAlign: 'center', color: 'darkblue', marginTop: '20px' }} onClick={onClick}>Copy SSO → Gym Site</div>
-      <div style={{ textAlign: 'center', marginTop: '20px' }}><a href="http://gymbooking.gechina.com.cn/gym.html">Go Gym Site</a></div>
+      <div style={{ textAlign: 'center', marginTop: '20px' }}><a href={`${server}/gym.html`}>Go Gym Site</a></div>
     </div>
   )
 }
@@ -83,7 +85,7 @@ const ReservedList = props => {
 
   const load = async () => {
     if (user && user.sso) {
-      const res = await fetch(`http://gymbooking.gechina.com.cn/api/v1/getLastGymRegFormsBySSO?sso=${user.sso}`)
+      const res = await fetch(`${server}/api/v1/getLastGymRegFormsBySSO?sso=${user.sso}`)
       const { data } = await res.json()
       data.sort((a, b) => moment(a.reg_date, 'YYYY-MM-DD') - moment(b.reg_date, 'YYYY-MM-DD'))
       setList(data)
@@ -94,7 +96,7 @@ const ReservedList = props => {
   const cancel = async () => {
     const regIds = list.filter(item => item.checked).map(item => item.reg_id)
     if (regIds.length > 0) {
-      const res = await fetch(`http://gymbooking.gechina.com.cn/api/v1/cancelGymRegList`, {
+      const res = await fetch(`${server}/api/v1/cancelGymRegList`, {
         method: 'POST',
         body: JSON.stringify(regIds.map(reg_id => ({ reg_id })))
       })
@@ -184,7 +186,7 @@ const ReserveForm = props => {
 
   const submit = async () => {
     if (user && user.sso && user.name && user.mobile) {
-      const res = await fetch('http://gymbooking.gechina.com.cn/api/v1/createGymRegForm', {
+      const res = await fetch(`${server}/api/v1/createGymRegForm`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -211,11 +213,11 @@ const ReserveForm = props => {
     setAvailable(available)
 
     const cancel = async (sso) => {
-      let res = await fetch(`http://gymbooking.gechina.com.cn/api/v1/getLastGymRegFormsBySSO?sso=${sso}`)
+      let res = await fetch(`${server}/api/v1/getLastGymRegFormsBySSO?sso=${sso}`)
       let { data } = await res.json()
       let reversed = data.find(item => item.reg_date === date)
       if (reversed?.reg_id) {
-        res = await fetch(`http://gymbooking.gechina.com.cn/api/v1/cancelGymRegList`, {
+        res = await fetch(`${server}/api/v1/cancelGymRegList`, {
           method: 'POST',
           body: JSON.stringify([{ reg_id: reversed?.reg_id }])
         })
@@ -225,7 +227,7 @@ const ReserveForm = props => {
 
     const reg = async (reg_schedule_id, status) => {
       const randSSO = "21" + Math.random().toString().slice(-7)
-      const res = await fetch('http://gymbooking.gechina.com.cn/api/v1/createGymRegForm', {
+      const res = await fetch(`${server}/api/v1/createGymRegForm`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -260,7 +262,7 @@ const ReserveForm = props => {
   const quickReg = async () => {
     setPosting(true)
     const reg = async (day, reg_schedule_id) => {
-      const res = await fetch('http://gymbooking.gechina.com.cn/api/v1/createGymRegForm', {
+      const res = await fetch(`${server}/api/v1/createGymRegForm`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -336,7 +338,7 @@ const Day = props => {
   const detail = reserved?.reg_schedule_detail ? `(${reserved?.reg_schedule_detail})` : ''
 
   React.useEffect(() => {
-    fetch(`http://gymbooking.gechina.com.cn/api/v1/checkDate?date=${value}`)
+    fetch(`${server}/api/v1/checkDate?date=${value}`)
       .then(res => res.json())
       .then(({ result }) => {
         if (result === 'ok') {
