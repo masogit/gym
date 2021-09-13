@@ -21,7 +21,7 @@ const Gym = props => {
     window.location.href = `${server}/gym.html`
   }
   return (
-    <div>
+    <div style={{ maxWidth: '414px' }}>
       <h2 style={{ textAlign: 'center' }}>Gym Revervation</h2>
       <UserInfo onChange={setUser} />
       <ReservedList user={user} onChange={setReserved} update={update} />
