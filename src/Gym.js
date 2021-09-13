@@ -9,7 +9,7 @@ const slots = [
   '12:50 - 14:10', '14:25 - 15:45', '16:00 - 17:20', '17:35 - 19:00'
 ]
 
-const server = 'http://gymbooking.ge.com.cn'
+const server = 'https://masosoft.top/gymbooking'
 
 const Gym = props => {
   const [user, setUser] = React.useState(null)
