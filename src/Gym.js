@@ -10,6 +10,7 @@ const slots = [
 ]
 
 const server = 'https://masosoft.top/gymbooking'
+const gymServer = 'http://gymbooking.ge.com.cn'
 
 const Gym = props => {
   const [user, setUser] = React.useState(null)
@@ -18,7 +19,7 @@ const Gym = props => {
   const onClick = () => {
     document.querySelector("input[placeholder='sso'").select()
     document.execCommand(`copy`, false)
-    window.location.href = `${server}/gym.html`
+    window.location.href = `${gymServer}/gym.html`
   }
   return (
     <div style={{ maxWidth: '414px' }}>
@@ -27,7 +28,7 @@ const Gym = props => {
       <ReservedList user={user} onChange={setReserved} update={update} />
       <ReserveForm user={user} reserved={reserved} onChange={() => setUpdate(update + 1)} />
       <div style={{ textAlign: 'center', color: 'darkblue', marginTop: '20px' }} onClick={onClick}>Copy SSO → Gym Site</div>
-      <div style={{ textAlign: 'center', marginTop: '20px' }}><a href={`${server}/gym.html`}>Go Gym Site</a></div>
+      <div style={{ textAlign: 'center', marginTop: '20px' }}><a href={`${gymServer}/gym.html`}>Go Gym Site</a></div>
     </div>
   )
 }
